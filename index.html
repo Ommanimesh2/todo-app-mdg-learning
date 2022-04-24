@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link
+    rel="stylesheet" type="text/css"
+    href="//cdn.jsdelivr.net/gh/loadingio/ldbutton@v1.0.1/dist/ldbtn.min.css"
+  />
+  
+    <script src="https://use.fontawesome.com/b87c51a10f.js"></script>
+    <title>Document</title>
+    
+  </head>
+  <body>
+   <div class="se-pre-con">
+  <img src="spinner.svg" alt="spinner">
+</div>
+    <header class="header">WORK ToDo</header>
+    <div class="nav">
+      <div class="nav-items All">All</div>
+      <div class="nav-items Completed">Completed</div>
+      <div class="nav-items Missed">Missed</div>
+    </div>
+    
+    <div class="addtask">ADD TASK
+        <i class="fa fa-2x fa-plus addtasks" aria-hidden="true"></i>
+      </div>
+      <form class="taskContent">
+        <input class="content" required placeholder="Write tasks" type="text">
+        <input type="datetime-local" required name="scheduledTime" class="timeToComplete"></input>
+        <button class="submitBtn">ADD</button>
+      </form>
+    <div class="allTasks">
+       <!-- <div class="newAllTasks hide"> -->
+        <!-- <i class="fa fa-2x fa-regular fa-circle"></i>
+        <div class="taskName">sadf</div>
+      </div>
+      <div class="times">
+      <div class="time">time</div>
+      <div class="toComplete">done</div>         -->
+    <!-- </div>  -->
+  </div>
+    <div class="missedTasks hide tasksInGeneral">
+    <div class="newAllTasks hide">
+<!--         
+          <div class="taskName">miss</div>
+          <form action="">
+          <input type="datetime-local" required class="datetime">
+          <button type="submit" class="reschedule">reschedule</button>
+        </div>
+      </form> -->
+       
+    </div>
+    <div class="completedTasks hide tasksInGeneral">
+      <!-- <div class="newAllTasks">
+    <i class="fa fa-2x fa-regular fa-circle done"></i>
+    <div class="taskName">com</div> -->
+  </div>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script type="module" src="main.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    
+
+</body>
+</html>
