@@ -36,6 +36,7 @@ All.addEventListener("click", () => {
   All.classList.add("highlight")
   Missed.classList.remove("highlight")
   Completed.classList.remove("highlight")
+  document.querySelector(".timeToComplete").classList.remove("hide")
 });
 
 Missed.addEventListener("click", () => {
@@ -136,7 +137,6 @@ let readData = () => {
       });
       let done = document.querySelectorAll(".done");
       let gone = document.querySelectorAll(".gone");
-      let reschedule = document.querySelectorAll(".reschedule");
       for (let j = 0; j < done.length; j++) {
         done[j].addEventListener("click", () => {
           setTimeout(() => {
@@ -146,9 +146,9 @@ let readData = () => {
           db.collection("task-content")
             .doc(usersArray[j])
             .get()
-            .then((d) => {
-              let content = d.data().content;
-              let t = d.data().scheduledTime;
+            .then(async(d) => {
+              let content =await d.data().content;
+              let t =await d.data().scheduledTime;
               console.log(t);
               db.collection("task-content").doc(usersArray[j]).delete();
 
@@ -191,43 +191,54 @@ let readData = () => {
                 });
             });
         });
-        missedTasks.addEventListener("click", (e) => {
-          if (e.target && e.target.matches("button.reschedule")) {
-            e.preventDefault();
-            setTimeout(() => {
-              location.reload();
-              
-              console.log("object");
-            }, 1400);
-            db.collection("missed-task")
-              .doc(missedTasksArray[j])
-              .get()
-              .then(async (f) => {
-                let contents =await f.data().content;
-                let timeStamp=await document.getElementById("timeStamp").value
-
-                db.collection("missed-task").doc(missedTasksArray[j]).delete();
-                console.log(timeStamp);
-                console.log(contents);
-                db.collection("task-content")
-                  .add({
-                    content: contents,
-                    scheduledTime: timeStamp,
-                    time: new Date().toLocaleTimeString(),
-                    status: "notDone",
-                  })
-                  .then((e) => {
-                    console.log(e);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                  });
-              });
-          }
-        });
+       
       }
     });
 };
+
+setInterval(() => {
+  
+let reschedule=document.querySelectorAll(".reschedule") 
+console.log(reschedule)
+
+for(let i=0;i<reschedule.length;i++){
+
+reschedule[i].addEventListener("click", (e) => {
+  setTimeout(() => {
+    location.reload();
+  }, 1400);    
+  
+    console.log(document.getElementById("timeStamp").value);
+    
+    db.collection("missed-task")
+      .doc(missedTasksArray[i])
+      .get()
+      .then(async (f) => {
+        let contents =await f.data().content;
+        let timeStamp=await document.getElementById("timeStamp").value
+
+        db.collection("missed-task").doc(missedTasksArray[i]).delete();
+        console.log(timeStamp);
+        console.log(contents);
+        db.collection("task-content")
+          .add({
+            content: contents,
+            scheduledTime: timeStamp,
+            time: new Date().toLocaleTimeString(),
+            status: "notDone",
+          })
+          .then((e) => {
+            console.log(e.id);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
+  
+});
+} 
+
+}, 5000);
 
 let readMissedData = () => {
   db.collection("missed-task")
@@ -250,7 +261,7 @@ let readCompletedData = () => {
       let getdata = data.docs.map((item) => {
         return { ...item.data() };
       });
-        
+        console.log(getdata);
       for (let i = 0; i < getdata.length; i++) {
         showDataCompleted(getdata[i].content, getdata[i].scheduledTime);
       }
@@ -297,23 +308,19 @@ function showDataCompleted(itemContent, scheduledTime) {
 function showDataMissed(itemContent, scheduledTime) {
   let div = document.createElement("div");
   div.innerHTML = ` 
-  <div class="newAllTasks hide">
+  
         
   <div class="taskName">${itemContent}</div>
-  <form action="">
+  
   <input type="datetime-local" class="datetime" id="timeStamp">
   <button class="reschedule">reschedule</button>
-  </form>
-</div>
+
+
   
   `;
   missedTasks.appendChild(div);
 }
-document.querySelector(".newAllTasks").addEventListener("click", (e) => {
-  if (e.target && e.target.matches("div.times")) {
-    times.classList.toggle("hide");
-  }
-});
+
 
 let updateData = (id) => {
   db.collection("task-content")
