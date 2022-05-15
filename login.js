@@ -50,7 +50,6 @@ signuppop.addEventListener("click", () => {
 loginpop.addEventListener("click", () => {
   signup.classList.add("hide");
   login.classList.remove("hide");
-  console.log("object");
 });
 let db = firebaseApp.firestore();
 document.querySelector(".pageContent").classList.add("hide");
@@ -69,9 +68,7 @@ async function sign(e) {
     const result = await firebase
       .auth()
       .createUserWithEmailAndPassword(email.value, password.value);
-    console.log(result);
   } catch (error) {
-    console.log(error);
   }
 }
 async function logins(e) {
@@ -82,7 +79,6 @@ async function logins(e) {
     const result = await firebase
       .auth()
       .signInWithEmailAndPassword(email.value, password.value);
-    console.log(result);
 
     document.querySelector(".pageContent").classList.remove("hide");
     document.querySelector(".formContent").classList.add("hide");
@@ -101,7 +97,6 @@ async function logins(e) {
              
       saveData(result.user);
       content.value = "";
-      console.log("done");
     }
     });
 
@@ -154,11 +149,9 @@ async function logins(e) {
       Completed.classList.add("highlight");
     });
   } catch (error) {
-    console.log(error);
   }
 }
 async function logout(e) {
-  console.log("objects");
 
   document.querySelector(".pageContent").classList.add("hide");
   document.querySelector(".formContent").classList.remove("hide");
@@ -174,7 +167,6 @@ let saveData = (user) => {
   let scheduledTime = document.querySelector(".timeToComplete").value;
   
 
-    console.log(scheduledTime);
     db.collection("task-content").add({
       uid: user.uid,
       content: content,

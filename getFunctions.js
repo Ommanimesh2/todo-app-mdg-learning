@@ -8,7 +8,6 @@ async function readCompletedData(user){
       let getdata = data.docs.map((item) => {
         return { ...item.data() };
       });
-      console.log(getdata);
       for (let i = 0; i < getdata.length; i++) {
         if (getdata[i].status === "done") {
           showDataCompleted(getdata[i].content, getdata[i].scheduledTime);
@@ -35,7 +34,6 @@ function readMissedData(user) {
       }
       doReschedule(user)
 
-      console.log(getsdata);
     });
 }
 function readData(user) {
@@ -43,78 +41,88 @@ function readData(user) {
     .where("uid", "==", user.uid)
     .get()
     .then((data) => {
-      console.log(user.uid);
       let getdata = data.docs.map((item) => {
         return { ...item.data() };
       });
       getdata.forEach((e) => {
         showDataAll(e.content, e.time, e.scheduledTime);
       });
-      console.log(allTasksArray);
       let done = document.querySelectorAll(".done");
       let gone = document.querySelectorAll(".gone");
       for (let j = 0; j < done.length; j++) {
         done[j].addEventListener("click", () => {
+          removeall()
+          
+         
           db.collection("task-content")
             .doc(allTasksArray[j])
             .get()
             .then(async (d) => {
-              if (d) {
-                let content = await d.data();
-                let t = await d.data();
-                console.log(content);
-                console.log(t);
+                let content = await d.data().content;
+                let t = await d.data().scheduledTime;
                 db.collection("task-content").doc(allTasksArray[j]).delete();
 
                 db.collection("done-task")
                   .add({
-                    content: content.content,
-                    scheduledTime: t.scheduledTime,
+                    content: content,
+                    scheduledTime: t,
                     uid: user.uid,
                     status: "done",
                   })
                   .then((docRef) => {
                     completedTasksArray.push(docRef.id);
-                    console.log("Document written with ID: ", docRef.id);
+                    setTimeout(() => {
+                      readData(user)
+                    }, 0.0000001);
+                    console.log("callde");
                   })
                   .catch((error) => {
                     console.error("Error adding document: ", error);
                   });
-              } else {
-                console.log("gotit");
-              }
+              
             });
         });
       }
       for (let j = 0; j < gone.length; j++) {
         gone[j].addEventListener("click", () => {
-          
-            db.collection("task-content")
-            .doc(allTasksArray[j])
+        
+           removeall()
+      
+    
+           
+           
+           db.collection("task-content")
+           .doc(allTasksArray[j])
             .get()
             .then(async (d) => {
               let content =await d.data().content;
               let t =await d.data().scheduledTime;
-              console.log(t);
               db.collection("task-content").doc(allTasksArray[j]).delete();
        
 
               db.collection("missed-task")
-                .add({
+              .add({
                   content: content,
                   scheduledTime: t,
                   uid: user.uid,
                   status: "missed",
                 })
                 .then((docRef) => {
-                  console.log("Document written with ID: ", docRef.id);
                   missedTasksArray.push(docRef.id)
+                  setTimeout(() => {
+                    readData(user)
+                  }, 0.0000001);
              
                 })
                 .catch((error) => {
                   console.error("Error adding document: ", error);
                 });  
               });
+
+
+
+
+
           
         });
       }
@@ -127,7 +135,6 @@ db.collection("task-content")
 .get()
 .then((e) => {
   e.forEach((doc) => {
-    console.log(`${doc.id}`);
     allTasksArray.push(doc.id);
   });
 });
@@ -135,7 +142,6 @@ db.collection("done-task")
 .get()
 .then((e) => {
   e.forEach((doc) => {
-    console.log(`${doc.id}`);
     completedTasksArray.push(doc.id);
   });
 });
@@ -143,7 +149,6 @@ db.collection("missed-task")
 .get()
 .then((e) => {
   e.forEach((doc) => {
-    console.log(`${doc.id}`);
     missedTasksArray.push(doc.id);
   });
 });
@@ -166,7 +171,6 @@ function addData(contents,timeStamp,user){
       uid: user.uid,
     })
     .then((e) => {
-      console.log(e);
     })
     .catch((error) => {
       console.error(error);
@@ -185,3 +189,4 @@ function once(fn, context) {
   };
 }
 let newfunc=once(addData)
+let readFunctionOnce=once(readData)
