@@ -1,62 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/index.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
     rel="stylesheet" type="text/css"
     href="//cdn.jsdelivr.net/gh/loadingio/ldbutton@v1.0.1/dist/ldbtn.min.css"
   />
   
+  <link rel="stylesheet" href="./css/index.css">
+  
     <script src="https://use.fontawesome.com/b87c51a10f.js"></script>
     <title>Document</title>
-    
-  </head>
-  <body>
-   <div class="se-pre-con">
-  <img src="spinner.svg" alt="spinner">
+</head>
+<body>
+<div class="formContent">
+<div class="mainbtns">
+  <button class="signuppop">Sign Up</button>
+  <button class="loginpop">Login</button>
 </div>
-    <header class="header">WORK ToDo</header>
-    <div class="nav">
-      <div class="nav-items All">All</div>
-      <div class="nav-items Completed">Completed</div>
-      <div class="nav-items Missed">Missed</div>
+  <form class="signup">
+    <input type="email" id="email" name="email">
+    <input type="password" id="password" name="password">
+    <button type="submit" onclick="sign()" id="submit" >signup</button>
+   </form >
+   <form class="login">
+    <input type="email" class="email" name="email">
+    <input type="password" class="password" name="password">
+    <button type="submit" onclick="logins()" class="log" >login</button>
+   </form >
+</div>
+   <div class="pageContent">
+    <div class="se-pre-con">
+      <img src="spinner.svg" alt="spinner">
     </div>
-    
-    <div class="addtask">ADD TASK
-        <i class="fa fa-2x fa-plus addtasks" aria-hidden="true"></i>
+        <header class="header">WORK ToDo</header>
+        <div class="nav">
+          <div class="nav-items All">All</div>
+          <div class="nav-items Completed">Completed</div>
+          <div class="nav-items Missed">Missed</div>
+        </div>
+        
+        <div class="addtask">ADD TASK
+            <i class="fa fa-2x fa-plus addtasks" aria-hidden="true"></i>
+          </div>
+          <form class="taskContent">
+            <input class="content" required placeholder="Write tasks" type="text">
+            <input type="datetime-local" required name="scheduledTime" class="timeToComplete"></input>
+            <button class="submitBtn">ADD</button>
+          </form>
+        <div class="allTasks tasksInGeneral">
+           <!-- <div class="newAllTasks hide"> -->
+            <!-- <i class="fa fa-2x fa-regular fa-circle"></i>
+            <div class="taskName">sadf</div>
+          </div>
+          <div class="times">
+          <div class="time">time</div>
+          <div class="toComplete">done</div>         -->
+        <!-- </div>  -->
       </div>
-      <form class="taskContent">
-        <input class="content" required placeholder="Write tasks" type="text">
-        <input type="datetime-local" required name="scheduledTime" class="timeToComplete"></input>
-        <button class="submitBtn">ADD</button>
-      </form>
-    <div class="allTasks">
-       <!-- <div class="newAllTasks hide"> -->
-        <!-- <i class="fa fa-2x fa-regular fa-circle"></i>
-        <div class="taskName">sadf</div>
-      </div>
-      <div class="times">
-      <div class="time">time</div>
-      <div class="toComplete">done</div>         -->
-    <!-- </div>  -->
-  </div>
-    <div class="missedTasks hide tasksInGeneral">
-
-    </div>
-    <div class="completedTasks hide tasksInGeneral">
-      <!-- <div class="newAllTasks">
-    <i class="fa fa-2x fa-regular fa-circle done"></i>
-    <div class="taskName">com</div> -->
-  </div>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
-    <script type="module" src="main.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+        <div class="missedTasks hide tasksInGeneral">
     
+        </div>
+        <div class="completedTasks hide tasksInGeneral">
+          <!-- <div class="newAllTasks">
+        <i class="fa fa-2x fa-regular fa-circle done"></i>
+        <div class="taskName">com</div> -->
+      </div>
+      
+   </div>
+       <button class="logut" onclick="logout()">log me outy</button>
+      <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+      <script src="login.js"></script>
+      <script src="getFunctions.js"></script>
+      <script src="showFunctions.js"></script>
+      <script src="localArrays.js"></script>
+      <script src="reschedule.js"> </script>
 
 </body>
 </html>
